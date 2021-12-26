@@ -12,13 +12,10 @@ app
   .get('/', (req, res) => {
     let parser = new Parser();
 
-    const feedRequests = FEED_LIST.map(feed => {
-      return parser.parseURL(feed);
-    })
+    const feedRequests = FEED_LIST.map(feed => parser.parseURL(feed));
 
     Promise.all(feedRequests).then(response => {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      // res.setHeader('Access-Control-Allow-Origin', 'some-domain-to-allow.com');
       res.header('Access-Control-Allow-Methods', 'GET');
       res.json(response);
     })
